@@ -1,8 +1,12 @@
 {
   "name": "u-develop-it",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest",
     "migrate": "sqlite3 db/election.db < db/schema.sql",

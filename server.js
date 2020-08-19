@@ -14,7 +14,39 @@ const db = new sqlite3.Database("./db/election.db", err => {
         return console.error(err.message);
     }
     console.log("Connected to the election database.");
-})
+});
+
+// Pull entire database and console log as an array of objects where each object is a row ('rows' variable)
+db.all(`SELECT * FROM candidates`, (err, rows) => {
+    console.log(rows);
+});
+
+// GET a single candidate from the database by reading
+db.get(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
+    if(err) {
+        console.log(err);
+    }
+    console.log(row);
+});
+
+// DELETE a single cadidate from the database by id
+db.run(`DELETE FROM candidates WHERE id = ?`, 1, function(err, result) {
+    if(err) {
+        console.log(err);
+    }
+    console.log(this, this.changes);
+});
+
+// CREATE a new candidate in the database
+const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected)
+              VALUES (?,?,?,?)`;
+const params = [1, "Ronald", "Firbank", 1];
+db.run(sql, params, function(err, result) {
+    if(err) {
+        console.log(err);
+    }
+    console.log(result, this.lastID);
+});
 
 // Default response for any other request(Not Found) Catch all
 app.use((req, res) => {

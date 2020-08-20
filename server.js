@@ -1,14 +1,16 @@
 const express = require("express");
 const db = require("./db/database.js");
-const apiRoutes = require("./routes/apiRoutes");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+const apiRoutes = require("./routes/apiRoutes");
+
 // Express middleware
-app.use("/api", apiRoutes);
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+
+app.use("/api", apiRoutes);
 
 
 // See "./routes/candidatesRoutes.js" for candidates API calls
